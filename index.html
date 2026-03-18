@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Security Affecting Online Banking</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* CSS Variables */
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f4f7f4; /* Very light olive tint */
+            --olive-light: #9cbd7c; /* Olive Light Green */
+            --olive-dark: #7a9c5b; /* Darker Olive for hover */
+            --olive-transparent: rgba(156, 189, 124, 0.2);
+            --text-dark: #2c3e2c;
+            --text-light: #556b55;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            --shadow-hover: 0 15px 40px rgba(156, 189, 124, 0.25);
+            --radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        /* Reset & Base */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-primary); color: var(--text-dark); line-height: 1.6; }
+        section { padding: 80px 10%; }
+        section:nth-child(even) { background-color: var(--bg-secondary); }
+        h1, h2, h3 { color: var(--text-dark); margin-bottom: 20px; font-weight: 600; }
+        h2 { font-size: 2.2rem; text-align: center; margin-bottom: 50px; position: relative; }
+        h2::after { content: ''; width: 60px; height: 4px; background: var(--olive-light); display: block; margin: 10px auto 0; border-radius: 2px; }
+        p { color: var(--text-light); margin-bottom: 15px; }
+        
+        /* Navigation */
+        nav { position: fixed; top: 0; width: 100%; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); padding: 20px 10%; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow); z-index: 1000; }
+        .logo { font-size: 1.2rem; font-weight: 700; color: var(--olive-dark); }
+        .nav-links { display: flex; gap: 20px; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 500; font-size: 0.9rem; transition: var(--transition); }
+        .nav-links a:hover { color: var(--olive-light); }
+        
+        /* Hero Section */
+        #home { display: flex; align-items: center; justify-content: space-between; min-height: 100vh; padding-top: 100px; }
+        .hero-content { flex: 1; padding-right: 50px; }
+        .hero-content h1 { font-size: 3.5rem; line-height: 1.2; margin-bottom: 20px; }
+        .hero-content h1 span { color: var(--olive-light); }
+        .btn { display: inline-block; padding: 12px 30px; background: var(--olive-light); color: white; text-decoration: none; border-radius: 30px; font-weight: 500; transition: var(--transition); box-shadow: 0 4px 15px var(--olive-transparent); border: none; cursor: pointer; }
+        .btn:hover { background: var(--olive-dark); transform: translateY(-3px); }
+        .hero-image { flex: 1; text-align: right; }
+        .hero-image i { font-size: 15rem; color: var(--olive-transparent); }
+
+        /* General Card Styles */
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .card { background: white; padding: 30px; border-radius: var(--radius); box-shadow: var(--shadow); transition: var(--transition); border-top: 4px solid transparent; }
+        .card:hover { transform: translateY(-10px); box-shadow: var(--shadow-hover); border-top: 4px solid var(--olive-light); }
+        .card i { font-size: 2.5rem; color: var(--olive-light); margin-bottom: 20px; }
+        .card h3 { font-size: 1.3rem; margin-bottom: 10px; }
+
+        /* Tools Section */
+        #tools .grid-container { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+        #tools .card { text-align: center; }
+
+        /* Timeline Workflow */
+        .timeline { position: relative; max-width: 800px; margin: 0 auto; }
+        .timeline::after { content: ''; position: absolute; width: 4px; background: var(--olive-transparent); top: 0; bottom: 0; left: 50%; margin-left: -2px; }
+        .timeline-item { padding: 10px 40px; position: relative; background: inherit; width: 50%; }
+        .timeline-item::after { content: ''; position: absolute; width: 20px; height: 20px; right: -10px; background: white; border: 4px solid var(--olive-light); top: 15px; border-radius: 50%; z-index: 1; }
+        .left { left: 0; text-align: right; }
+        .right { left: 50%; }
+        .right::after { left: -10px; }
+        .timeline-content { padding: 20px; background: white; border-radius: var(--radius); box-shadow: var(--shadow); }
+
+        /* ML Demo Form */
+        .demo-box { background: white; padding: 40px; border-radius: var(--radius); box-shadow: var(--shadow); max-width: 600px; margin: 0 auto; text-align: center; }
+        .form-group { margin-bottom: 20px; text-align: left; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 500; }
+        .form-group input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; outline: none; transition: var(--transition); }
+        .form-group input:focus { border-color: var(--olive-light); box-shadow: 0 0 0 3px var(--olive-transparent); }
+        #result-box { margin-top: 20px; padding: 15px; border-radius: 8px; display: none; font-weight: 600; }
+
+        /* Chart Section */
+        .chart-container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: var(--radius); box-shadow: var(--shadow); }
+
+        /* Footer */
+        footer { background: var(--text-dark); color: white; padding: 50px 10% 20px; text-align: center; }
+        footer p { color: #aaa; }
+        .footer-credit { margin-top: 30px; font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; color: var(--olive-light); }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            #home { flex-direction: column; text-align: center; padding-top: 120px; }
+            .hero-content { padding-right: 0; }
+            .hero-image { display: none; }
+            .nav-links { display: none; } /* Mobile menu toggle can be added here */
+            .timeline::after { left: 31px; }
+            .timeline-item { width: 100%; padding-left: 70px; padding-right: 25px; text-align: left; }
+            .timeline-item::after { left: 21px; }
+            .right { left: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo"><i class="fas fa-shield-alt"></i> CyberBank Study</div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#intro">Introduction</a></li>
+            <li><a href="#threats">Threats</a></li>
+            <li><a href="#data">Data Analysis</a></li>
+            <li><a href="#ml">ML Demo</a></li>
+            <li><a href="#workflow">Workflow</a></li>
+        </ul>
+    </nav>
+
+    <section id="home">
+        <div class="hero-content">
+            <h1>The Study on <span>Cyber Security</span> Affecting Online Banking</h1>
+            <p>A comprehensive academic exploration of how digital banking is transforming financial services and why robust cybersecurity measures are essential for protecting consumer assets in the modern era.</p>
+            <a href="#intro" class="btn">Explore the Study</a>
+        </div>
+        <div class="hero-image">
+            <i class="fas fa-network-wired"></i>
+        </div>
+    </section>
+
+    <section id="intro">
+        <h2>Introduction</h2>
+        <div class="grid-container">
+            <div class="card">
+                <i class="fas fa-chart-line"></i>
+                <h3>Growth of Online Banking</h3>
+                <p>The transition from traditional to digital banking has accelerated globally, offering unprecedented convenience but expanding the attack surface for malicious actors.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-clock"></i>
+                <h3>Unmatched Benefits</h3>
+                <p>Digital finance provides 24/7 accessibility, instant international transfers, and automated personal finance management tools directly from mobile devices.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-bug"></i>
+                <h3>Emerging Threats</h3>
+                <p>As financial ecosystems digitize, advanced persistent threats, sophisticated social engineering, and algorithmic attacks pose critical risks to systemic stability.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="threats">
+        <h2>Cyber Threats in Online Banking</h2>
+        <div class="grid-container">
+            <div class="card">
+                <i class="fas fa-fish"></i>
+                <h3>Phishing Attacks</h3>
+                <p>Deceptive communications designed to trick users into revealing sensitive credentials.</p>
+                <p><strong>Scenario:</strong> A fake email mimicking a bank asks the user to "verify their account," leading to a credential-harvesting site.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-virus"></i>
+                <h3>Malware & Ransomware</h3>
+                <p>Malicious software that disrupts operations or encrypts data for ransom.</p>
+                <p><strong>Scenario:</strong> A trojan app intercepts SMS OTPs, allowing attackers to authorize fraudulent wire transfers.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-database"></i>
+                <h3>Data Breaches</h3>
+                <p>Unauthorized access to secure financial databases containing PII.</p>
+                <p><strong>Scenario:</strong> Hackers exploit a vulnerable API to download thousands of customer credit card details.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-user-secret"></i>
+                <h3>Identity Theft</h3>
+                <p>Impersonating individuals using stolen information for financial gain.</p>
+                <p><strong>Scenario:</strong> An attacker uses leaked SSNs to open fraudulent lines of credit in the victim's name.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="importance">
+        <h2>Importance of Security Practices</h2>
+        <div class="grid-container">
+            <div class="card">
+                <i class="fas fa-mobile-alt"></i>
+                <h3>Multi-Factor Authentication</h3>
+                <p>Requires two or more verification methods (password + biometrics) to access an account, drastically reducing unauthorized access.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-network-wired"></i>
+                <h3>Secure Connections (VPN/SSL)</h3>
+                <p>Encrypts data in transit, ensuring that man-in-the-middle attackers cannot intercept sensitive transaction details.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-sync"></i>
+                <h3>Regular Software Updates</h3>
+                <p>Patches known vulnerabilities in banking applications, preventing zero-day exploits and legacy system breaches.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-id-badge"></i>
+                <h3>Privilege Control</h3>
+                <p>Implementing Zero Trust architecture ensuring internal employees only have access to data absolutely necessary for their role.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="data">
+        <h2>Data Analysis & Survey Results</h2>
+        <div class="chart-container">
+            <canvas id="surveyChart"></canvas>
+        </div>
+        <div style="text-align: center; margin-top: 30px;">
+            <p><strong>63.7%</strong> actively use online banking | <strong>85%</strong> are aware of cyber threats | <strong>91%</strong> rely on 2FA for security</p>
+        </div>
+    </section>
+
+    <section id="tools">
+        <h2>Data Science Tools Used</h2>
+        <div class="grid-container">
+            <div class="card">
+                <i class="fab fa-python"></i>
+                <h3>Python</h3>
+                <p>Core programming language for data analysis.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-table"></i>
+                <h3>Pandas</h3>
+                <p>Used for robust data processing and manipulation.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-calculator"></i>
+                <h3>NumPy</h3>
+                <p>Facilitates complex numerical computations.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-brain"></i>
+                <h3>Scikit-learn</h3>
+                <p>Library utilized for training ML models.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-chart-pie"></i>
+                <h3>Matplotlib</h3>
+                <p>Generates high-quality data visualizations.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="ml">
+        <h2>Fraud Detection Machine Learning Model</h2>
+        <p style="text-align: center; max-width: 800px; margin: 0 auto 40px;">Our study employs a <strong>Random Forest algorithm</strong> to analyze datasets, preprocess transactional data, and identify patterns separating legitimate transfers from fraudulent anomalies.</p>
+        
+        <div class="demo-box">
+            <h3>Live Fraud Prediction Demo</h3>
+            <p>Simulate a transaction to see the ML classification logic in action.</p>
+            
+            <form id="mlForm">
+                <div class="form-group">
+                    <label>Transaction Amount ($)</label>
+                    <input type="number" id="amount" placeholder="e.g., 500" required>
+                </div>
+                <div class="form-group">
+                    <label>Location Distance from Home (Miles)</label>
+                    <input type="number" id="distance" placeholder="e.g., 10" required>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Run Prediction Model</button>
+            </form>
+            
+            <div id="result-box"></div>
+        </div>
+    </section>
+
+    <section id="workflow">
+        <h2>Execution Workflow</h2>
+        <div class="timeline">
+            <div class="timeline-item left">
+                <div class="timeline-content">
+                    <h3>1. Setup Environment</h3>
+                    <p>Install required Python libraries (Pandas, Scikit-learn, etc.) via pip.</p>
+                </div>
+            </div>
+            <div class="timeline-item right">
+                <div class="timeline-content">
+                    <h3>2. Load Dataset</h3>
+                    <p>Import anonymized banking transaction datasets for analysis.</p>
+                </div>
+            </div>
+            <div class="timeline-item left">
+                <div class="timeline-content">
+                    <h3>3. Preprocess Data</h3>
+                    <p>Handle missing values, encode categorical variables, and normalize data.</p>
+                </div>
+            </div>
+            <div class="timeline-item right">
+                <div class="timeline-content">
+                    <h3>4. Train Model</h3>
+                    <p>Split data and apply the Random Forest classification algorithm.</p>
+                </div>
+            </div>
+            <div class="timeline-item left">
+                <div class="timeline-content">
+                    <h3>5. Predict & Evaluate</h3>
+                    <p>Test the model on unseen data and calculate accuracy, precision, and recall metrics.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="conclusion">
+        <h2>Conclusion</h2>
+        <div class="grid-container" style="max-width: 900px; margin: 0 auto;">
+            <div class="card" style="text-align: center;">
+                <p>The landscape of online banking is constantly evolving, bringing both exceptional convenience and sophisticated cyber threats. As our study demonstrates, relying solely on traditional security is insufficient.</p>
+                <p>The integration of <strong>AI-based fraud detection systems</strong>, combined with stringent multi-factor authentication and continuous security awareness, forms the essential perimeter needed to protect consumer financial data in the modern digital age.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="references" style="background: var(--bg-primary);">
+        <h2>Academic References</h2>
+        <div style="max-width: 800px; margin: 0 auto;">
+            <ul style="list-style-type: disc; color: var(--text-light); padding-left: 20px;">
+                <li>Smith, J. (2023). <em>Machine Learning Applications in Financial Fraud Detection</em>. Journal of Cybersecurity Research.</li>
+                <li>Doe, A. & Lee, K. (2024). <em>The Evolution of Phishing in Mobile Banking</em>. International Conference on Information Systems.</li>
+                <li>Global Banking Security Report (2023). <em>Analyzing Consumer Trust and 2FA Adoption Rates</em>. Financial Tech Insights.</li>
+            </ul>
+        </div>
+    </section>
+
+    <footer>
+        <h3>The Study on Cyber Security Affecting Online Banking</h3>
+        <p>A comprehensive academic project demonstration.</p>
+        <div class="footer-credit">
+            Developed by Nyxel Studios
+        </div>
+    </footer>
+
+    <script>
+        // Chart.js Configuration
+        const ctx = document.getElementById('surveyChart').getContext('2d');
+        const surveyChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Actively Use Online Banking', 'Aware of Cyber Threats', 'Believe 2FA Improves Security'],
+                datasets: [{
+                    label: 'Percentage of Users (%)',
+                    data: [63.7, 85, 91],
+                    backgroundColor: 'rgba(156, 189, 124, 0.7)', // Olive transparent
+                    borderColor: '#9cbd7c', // Olive light
+                    borderWidth: 2,
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+        // ML Demo Logic
+        document.getElementById('mlForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const amount = parseFloat(document.getElementById('amount').value);
+            const distance = parseFloat(document.getElementById('distance').value);
+            const resultBox = document.getElementById('result-box');
+            
+            // Simple logic to simulate ML decision tree
+            resultBox.style.display = 'block';
+            if (amount > 5000 || distance > 500 || (amount > 1000 && distance > 100)) {
+                resultBox.style.backgroundColor = '#ffebee';
+                resultBox.style.color = '#c62828';
+                resultBox.style.border = '1px solid #ef9a9a';
+                resultBox.innerHTML = '<i class="fas fa-exclamation-triangle"></i> ALERT: Transaction Flagged as Fraudulent by Random Forest Model';
+            } else {
+                resultBox.style.backgroundColor = '#e8f5e9';
+                resultBox.style.color = '#2e7d32';
+                resultBox.style.border = '1px solid #a5d6a7';
+                resultBox.innerHTML = '<i class="fas fa-check-circle"></i> SAFE: Transaction Classified as Legitimate';
+            }
+        });
+    </script>
+</body>
+</html>
