@@ -11,9 +11,9 @@
         /* CSS Variables */
         :root {
             --bg-primary: #ffffff;
-            --bg-secondary: #f4f7f4; /* Very light olive tint */
-            --olive-light: #9cbd7c; /* Olive Light Green */
-            --olive-dark: #7a9c5b; /* Darker Olive for hover */
+            --bg-secondary: #f4f7f4; 
+            --olive-light: #9cbd7c; 
+            --olive-dark: #7a9c5b; 
             --olive-transparent: rgba(156, 189, 124, 0.2);
             --text-dark: #2c3e2c;
             --text-light: #556b55;
@@ -26,7 +26,7 @@
         /* Reset & Base */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         html { scroll-behavior: smooth; }
-        body { background-color: var(--bg-primary); color: var(--text-dark); line-height: 1.6; }
+        body { background-color: var(--bg-primary); color: var(--text-dark); line-height: 1.6; overflow-x: hidden; }
         section { padding: 80px 10%; }
         section:nth-child(even) { background-color: var(--bg-secondary); }
         h1, h2, h3 { color: var(--text-dark); margin-bottom: 20px; font-weight: 600; }
@@ -35,12 +35,17 @@
         p { color: var(--text-light); margin-bottom: 15px; }
         
         /* Navigation */
-        nav { position: fixed; top: 0; width: 100%; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); padding: 20px 10%; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow); z-index: 1000; }
-        .logo { font-size: 1.2rem; font-weight: 700; color: var(--olive-dark); }
+        nav { position: fixed; top: 0; left: 0; width: 100%; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); padding: 20px 10%; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow); z-index: 1000; }
+        .logo { font-size: 1.2rem; font-weight: 700; color: var(--olive-dark); z-index: 1001; }
+        
         .nav-links { display: flex; gap: 20px; list-style: none; }
         .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 500; font-size: 0.9rem; transition: var(--transition); }
         .nav-links a:hover { color: var(--olive-light); }
         
+        /* Hamburger Menu Icon */
+        .hamburger { display: none; font-size: 1.8rem; color: var(--text-dark); cursor: pointer; z-index: 1001; transition: var(--transition); }
+        .hamburger:hover { color: var(--olive-light); }
+
         /* Hero Section */
         #home { display: flex; align-items: center; justify-content: space-between; min-height: 100vh; padding-top: 100px; }
         .hero-content { flex: 1; padding-right: 50px; }
@@ -53,13 +58,13 @@
 
         /* General Card Styles */
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
-        .card { background: white; padding: 30px; border-radius: var(--radius); box-shadow: var(--shadow); transition: var(--transition); border-top: 4px solid transparent; }
+        .card { background: white; padding: 30px; border-radius: var(--radius); box-shadow: var(--shadow); transition: var(--transition); border-top: 4px solid transparent; height: 100%; }
         .card:hover { transform: translateY(-10px); box-shadow: var(--shadow-hover); border-top: 4px solid var(--olive-light); }
         .card i { font-size: 2.5rem; color: var(--olive-light); margin-bottom: 20px; }
         .card h3 { font-size: 1.3rem; margin-bottom: 10px; }
 
         /* Tools Section */
-        #tools .grid-container { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+        #tools .grid-container { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
         #tools .card { text-align: center; }
 
         /* Timeline Workflow */
@@ -73,7 +78,7 @@
         .timeline-content { padding: 20px; background: white; border-radius: var(--radius); box-shadow: var(--shadow); }
 
         /* ML Demo Form */
-        .demo-box { background: white; padding: 40px; border-radius: var(--radius); box-shadow: var(--shadow); max-width: 600px; margin: 0 auto; text-align: center; }
+        .demo-box { background: white; padding: 40px; border-radius: var(--radius); box-shadow: var(--shadow); max-width: 600px; margin: 0 auto; text-align: center; width: 100%; }
         .form-group { margin-bottom: 20px; text-align: left; }
         .form-group label { display: block; margin-bottom: 8px; font-weight: 500; }
         .form-group input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; outline: none; transition: var(--transition); }
@@ -81,37 +86,96 @@
         #result-box { margin-top: 20px; padding: 15px; border-radius: 8px; display: none; font-weight: 600; }
 
         /* Chart Section */
-        .chart-container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: var(--radius); box-shadow: var(--shadow); }
+        .chart-container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: var(--radius); box-shadow: var(--shadow); width: 100%; }
 
         /* Footer */
         footer { background: var(--text-dark); color: white; padding: 50px 10% 20px; text-align: center; }
         footer p { color: #aaa; }
         .footer-credit { margin-top: 30px; font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; color: var(--olive-light); }
 
-        /* Responsive Design */
+        /* =========================================
+           RESPONSIVE DESIGN (Tablets & Mobile)
+           ========================================= */
+        @media (max-width: 992px) {
+            .hero-content h1 { font-size: 2.8rem; }
+            section { padding: 60px 5%; }
+            nav { padding: 15px 5%; }
+        }
+
         @media (max-width: 768px) {
-            #home { flex-direction: column; text-align: center; padding-top: 120px; }
-            .hero-content { padding-right: 0; }
+            /* Hamburger Menu Activation */
+            .hamburger { display: block; }
+            
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%; /* Hidden off-screen by default */
+                height: 100vh;
+                width: 70%;
+                max-width: 300px;
+                background: var(--bg-primary);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 30px;
+                box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+                transition: 0.4s ease-in-out;
+            }
+
+            .nav-links.active { right: 0; } /* Slides in when active */
+            
+            .nav-links a { font-size: 1.2rem; }
+
+            /* Overlay for mobile menu */
+            .menu-overlay {
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(0,0,0,0.5); z-index: 999;
+                display: none; opacity: 0; transition: 0.3s;
+            }
+            .menu-overlay.active { display: block; opacity: 1; }
+
+            /* Hero Section adjustments */
+            #home { flex-direction: column; text-align: center; justify-content: center; padding-top: 100px; }
+            .hero-content { padding-right: 0; margin-bottom: 40px; }
+            .hero-content h1 { font-size: 2.2rem; }
             .hero-image { display: none; }
-            .nav-links { display: none; } /* Mobile menu toggle can be added here */
+
+            /* Typography & Spacing */
+            h2 { font-size: 1.8rem; margin-bottom: 30px; }
+            .demo-box, .chart-container { padding: 20px; }
+            
+            /* Timeline layout for mobile */
             .timeline::after { left: 31px; }
-            .timeline-item { width: 100%; padding-left: 70px; padding-right: 25px; text-align: left; }
+            .timeline-item { width: 100%; padding-left: 70px; padding-right: 0; text-align: left; }
             .timeline-item::after { left: 21px; }
             .right { left: 0; }
+        }
+
+        @media (max-width: 480px) {
+            .grid-container { grid-template-columns: 1fr; } /* Stack cards completely */
+            .hero-content h1 { font-size: 1.8rem; }
+            section { padding: 50px 5%; }
         }
     </style>
 </head>
 <body>
 
+    <div class="menu-overlay" id="menu-overlay"></div>
+
     <nav>
         <div class="logo"><i class="fas fa-shield-alt"></i> CyberBank Study</div>
-        <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#intro">Introduction</a></li>
-            <li><a href="#threats">Threats</a></li>
-            <li><a href="#data">Data Analysis</a></li>
-            <li><a href="#ml">ML Demo</a></li>
-            <li><a href="#workflow">Workflow</a></li>
+        
+        <div class="hamburger" id="hamburger">
+            <i class="fas fa-bars"></i>
+        </div>
+
+        <ul class="nav-links" id="nav-links">
+            <li><a href="#home" class="nav-item">Home</a></li>
+            <li><a href="#intro" class="nav-item">Introduction</a></li>
+            <li><a href="#threats" class="nav-item">Threats</a></li>
+            <li><a href="#data" class="nav-item">Data Analysis</a></li>
+            <li><a href="#ml" class="nav-item">ML Demo</a></li>
+            <li><a href="#workflow" class="nav-item">Workflow</a></li>
         </ul>
     </nav>
 
@@ -224,7 +288,7 @@
             <div class="card">
                 <i class="fas fa-table"></i>
                 <h3>Pandas</h3>
-                <p>Used for robust data processing and manipulation.</p>
+                <p>Used for robust data processing.</p>
             </div>
             <div class="card">
                 <i class="fas fa-calculator"></i>
@@ -334,7 +398,43 @@
     </footer>
 
     <script>
-        // Chart.js Configuration
+        // --- Navigation Mobile Menu Logic ---
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('nav-links');
+        const overlay = document.getElementById('menu-overlay');
+        const navItems = document.querySelectorAll('.nav-item');
+        const icon = hamburger.querySelector('i');
+
+        function toggleMenu() {
+            navLinks.classList.toggle('active');
+            overlay.classList.toggle('active');
+            
+            // Toggle between burger and close icon
+            if (navLinks.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        }
+
+        // Open/Close via hamburger click
+        hamburger.addEventListener('click', toggleMenu);
+
+        // Close when clicking outside (overlay)
+        overlay.addEventListener('click', toggleMenu);
+
+        // Close menu when a link is clicked
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+
+        // --- Chart.js Configuration ---
         const ctx = document.getElementById('surveyChart').getContext('2d');
         const surveyChart = new Chart(ctx, {
             type: 'bar',
@@ -351,6 +451,7 @@
             },
             options: {
                 responsive: true,
+                maintainAspectRatio: false, // Helps it fit better on small screens
                 scales: {
                     y: {
                         beginAtZero: true,
@@ -365,14 +466,13 @@
             }
         });
 
-        // ML Demo Logic
+        // --- ML Demo Logic ---
         document.getElementById('mlForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const amount = parseFloat(document.getElementById('amount').value);
             const distance = parseFloat(document.getElementById('distance').value);
             const resultBox = document.getElementById('result-box');
             
-            // Simple logic to simulate ML decision tree
             resultBox.style.display = 'block';
             if (amount > 5000 || distance > 500 || (amount > 1000 && distance > 100)) {
                 resultBox.style.backgroundColor = '#ffebee';
